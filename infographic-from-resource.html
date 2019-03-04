@@ -74,6 +74,7 @@
                     // e.g., https://www.arcgis.com/sharing/rest/content/items/dedca473ada34e4a8556aa396f5aadb3/resources/thumbnail.png
                     UniversalClient.request(getUrlVariable("resourceUrl") + "?token=" + getUrlVariable("token")).then(function (result) {
                         var player = new ReportPlayer({
+                            showToolbarInPopup: true,
                             viewMode: getUrlVariable("viewMode") || PlayerViewModes.FULL_PAGES,
                             enableDataDrilling: getUrlVariable("enableDataDrilling"),
                             onError: function (e) {
