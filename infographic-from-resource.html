@@ -112,7 +112,9 @@
                                 customButton.style.marginRight = "25px";
                                 customButton.style.cursor = "pointer";
                                 customButton.addEventListener("click", function () {
-                                    window.open("https://www.esri.com", "_blank");
+                                    var fullScreenUrl = window.location.href;
+                                    fullScreenUrl = fullScreenUrl.replace(/viewMode=panelsInSlides/i, "");
+                                    window.open(fullScreenUrl, "_blank");
                                 });
                                 toolbarNode.appendChild(customButton);
                             }
