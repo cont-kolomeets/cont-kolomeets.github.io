@@ -73,6 +73,10 @@
                         if (parts.length == 2)
                             return parts.pop().split(";").shift();
                     };
+                    
+                    console.log(decodeURIComponent(document.cookie || ""));
+                    if(window.top && window.top.document)
+                        console.log(decodeURIComponent(window.top.document.cookie || ""));
 
                     // 1. Download a resource.
                     // 2. Play the data.
