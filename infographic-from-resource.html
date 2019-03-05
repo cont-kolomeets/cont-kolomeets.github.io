@@ -23,11 +23,15 @@
             nlsFix.load(null, relativeRequire);
             require([
                 "dojo/Deferred",
+                "dojo/when",
+                "dojo/query",
                 "esri/dijit/geoenrichment/utils/WaitingUtil",
                 "dojo/domReady!"
             ],
             function (
                 Deferred,
+                when,
+                dojoQuery,
                 WaitingUtil
             ) {
                 var dfd = new Deferred();
@@ -81,7 +85,22 @@
                                 console.log(e);
                             }
                         }).placeAt(layoutNode);
-                        player.reportDataFromJson(result); // will be handled as json
+                        // will be handled as json
+                        when(player.reportDataFromJson(result), function () {
+                            var toolbarNode = dojoQuery(".esriGEPlayerToolbar")[0];
+                            if (toolbarNode) {
+                                var customButton = document.createElement("div");
+                                customButton.innerHTML = "View full screen";
+                                customButton.classList.add("dijitInline");
+                                customButton.style.marginLeft = "25px";
+                                customButton.style.marginRight = "25px";
+                                customButton.style.cursor = "pointer";
+                                customButton.addEventListener("click", function () {
+                                    window.open("https://www.esri.com", "_blank");
+                                });
+                                toolbarNode.appendChild(customButton);
+                            }
+                        });
                     }).always(dfd.resolve);
                 });
             });
