@@ -94,7 +94,7 @@
                     // e.g., https://www.arcgis.com/sharing/rest/content/items/dedca473ada34e4a8556aa396f5aadb3/resources/thumbnail.png
                     UniversalClient.request(getUrlVariable("resourceUrl") + "?token=" + getUrlVariable("token")).then(function (result) {
                         var player = new ReportPlayer({
-                            showToolbarInPopup: true,
+                            showToolbarInPopup: getUrlVariable("showToolbarInPopup") !== "false",
                             viewMode: getUrlVariable("viewMode") || PlayerViewModes.FULL_PAGES,
                             enableDataDrilling: getUrlVariable("enableDataDrilling"),
                             onError: function (e) {
@@ -113,7 +113,7 @@
                                 customButton.style.cursor = "pointer";
                                 customButton.addEventListener("click", function () {
                                     var fullScreenUrl = window.location.href;
-                                    fullScreenUrl = fullScreenUrl.replace(/viewMode=panelsInSlides/i, "");
+                                    fullScreenUrl = fullScreenUrl.replace(/viewMode=panelsInSlides/i, "") + "&showToolbarInPopup=false";
                                     window.open(fullScreenUrl, "_blank");
                                 });
                                 toolbarNode.appendChild(customButton);
