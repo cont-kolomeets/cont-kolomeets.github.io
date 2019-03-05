@@ -75,10 +75,17 @@
                     };
                     
                     try {
-                    console.log(decodeURIComponent(document.cookie || ""));
-                    if(window.top && window.top.document)
-                        console.log(decodeURIComponent(window.top.document.cookie || ""));
-                    } catch(e){ console.log(e); }
+                        console.log("iFrame loaded.");
+                        console.log("This document cookie:");
+                        console.log(decodeURIComponent(document.cookie || ""));
+                        if (window.top && window.top.document) {
+                            console.log("Parent document cookie:");   
+                            console.log(decodeURIComponent(window.top.document.cookie || ""));
+                        }
+                    } 
+                    catch(e) { 
+                        console.log(e); 
+                    }
 
                     // 1. Download a resource.
                     // 2. Play the data.
