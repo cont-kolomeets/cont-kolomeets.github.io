@@ -56,7 +56,7 @@
         var token = getUrlVariable("token") || getTokenFromCookie();
         var reports = JSON.parse(decodeURIComponent(getUrlVariable("reports")));
         reports.forEach(function (report) {
-            var root = document.createElementNS("div");
+            var root = document.createElement("div");
             root.style.fontSize = "13px";
             root.style.padding = "5px";
             var url = report.url.split("?")[0].split("#")[0];
