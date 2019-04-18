@@ -16,11 +16,23 @@
             font-family: 'open_sansregular', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
         }
 
+        .shortlist a {
+            text-decoration: none;
+        }
+
+        .shortlist a:hover {
+            text-decoration: underline;
+        }
+
+        .mapJournal a {
+            color: #555;
+        }
+
     </style>
     <script>
         // URL params:
         // reports              String. Required. "[{ name: String, url: String }]".
-        // style                String. Optional. "font-size:13px;padding:5px;"
+        // storyMapType         String. Optional.
         // token                String. Recommended. If missing, the one from the cookies will be used.
 
         function getUrlVariable(name) {
@@ -57,32 +69,16 @@
         window.onload = function () {
             var token = getUrlVariable("token") || getTokenFromCookie();
             var reports = JSON.parse(decodeURIComponent(getUrlVariable("reports")));
-            var style = decodeURIComponent(getUrlVariable("style") || "");
             reports.forEach(function (report) {
                 var root = document.createElement("div");
-                style.split(";").forEach(function (s) {
-                    s = s.trim();
-                    if (!s)
-                        return;
-
-                    var ps = s.trim().split(":");
-                    var name = ps[0];
-                    var value = ps[1];
-                    switch (name) {
-                        case "font-size":
-                            root.style.fontSize = value;
-                            break;
-                        case "text-decoration":
-                            root.style.fontSize = value;
-                            break;
-                        default:
-                            root.style[name] = value;
-                    }
-                });
                 var url = report.url.split("?")[0].split("#")[0];
                 if (token)
                     url += "?token=" + token;
                 root.innerHTML = `<a target="_blank" href="${url}">${report.name}</a>`;
+                root.style.padding = "5px";
+                root.style.fontSize = "13px";
+                if (getUrlVariable("storyMapType"))
+                    document.body.classList.add(getUrlVariable("storyMapType"));
                 document.getElementById("layoutNode").appendChild(root);
             });
         };
