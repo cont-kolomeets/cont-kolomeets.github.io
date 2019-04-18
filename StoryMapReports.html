@@ -28,11 +28,15 @@
             color: #555;
         }
 
+        .mapJournal .reportRoot {
+            line-height: 30px;
+        }
+
     </style>
     <script>
         // URL params:
         // reports              String. Required. "[{ name: String, url: String }]".
-        // storyMapType         String. Optional.
+        // storyMapType         String. Required.
         // token                String. Recommended. If missing, the one from the cookies will be used.
 
         function getUrlVariable(name) {
@@ -71,6 +75,7 @@
             var reports = JSON.parse(decodeURIComponent(getUrlVariable("reports")));
             reports.forEach(function (report) {
                 var root = document.createElement("div");
+                root.classList.add("reportRoot");
                 var url = report.url.split("?")[0].split("#")[0];
                 if (token)
                     url += "?token=" + token;
