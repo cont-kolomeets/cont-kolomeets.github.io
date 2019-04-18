@@ -23,15 +23,15 @@
         // token                String. Recommended. If missing, the one from the cookies will be used.
 
         function getUrlVariable(name) {
-            var obj = esriUrlUtils.urlToObject(window.location.href);
-            if (!obj.query)
-                return undefined;
-
-            var query = {};
-            Object.keys(obj.query).forEach(function (key) {
-                query[key.toLowerCase()] = obj.query[key];
+            var queries = window.location.href.split("?")[1].split("&");
+            var value;
+            queries.some(function (q) {
+                if (q.indexOf(name + "=") === 0) {
+                    value = q.split(name + "=")[1];
+                    return true; // stop the cycle
+                }
             });
-            return query[name.toLowerCase()];
+            return value;
         };
 
         function getCookie(name) {
