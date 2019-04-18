@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <style>
+        html,
+        body,
+        #layoutNode {
+            padding: 0px;
+            margin: 0px;
+            height: 100%;
+            overflow: hidden;
+            font-size: 13px;
+            font-family: 'open_sansregular', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+        }
+
+    </style>
+    <script>
+        // URL params:
+        // reports              String. Required. "[{ name: String, url: String }]".
+        // token                String. Recommended. If missing, the one from the cookies will be used.
+
+        function getUrlVariable(name) {
+            var obj = esriUrlUtils.urlToObject(window.location.href);
+            if (!obj.query)
+                return undefined;
+
+            var query = {};
+            Object.keys(obj.query).forEach(function (key) {
+                query[key.toLowerCase()] = obj.query[key];
+            });
+            return query[name.toLowerCase()];
+        };
+
+        function getCookie(name) {
+            var value = "; " + decodeURIComponent(document.cookie || "");
+            var parts = value.split("; " + name + "=");
+            if (parts.length === 2)
+                return parts.pop().split(";").shift();
+        };
+
+        function getTokenFromCookie() {
+            var authInfo = getCookie("esri_auth");
+            try {
+                authInfo = authInfo && JSON.parse(authInfo);
+                return authInfo && authInfo.token;
+            } catch (e) {
+                console.log("Can't process esri_auth cookie");
+                return null;
+            }
+            return null;
+        }
+
+        var token = getUrlVariable("token") || getTokenFromCookie();
+        var reports = JSON.parse(getUrlVariable("reports"));
+        reports.forEach(function (report) {
+            var root = document.createElementNS("div");
+            root.style.fontSize = "13px";
+            root.style.padding = "5px";
+            var url = report.url.split("?")[0].split("#")[0];
+            if (token)
+                url += "?token=" + token;
+            root.innerHTML = `<a target="_blank" href="${url}">${report.name}</a>`;
+            layoutNode.appendChild(root);
+        });
+
+    </script>
+</head>
+
+<body class="claro" style="margin:0px;">
+    <div id="layoutNode"></div>
+</body>
+
+</html>
