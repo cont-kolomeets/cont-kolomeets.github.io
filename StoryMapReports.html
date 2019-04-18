@@ -53,18 +53,20 @@
             return null;
         }
 
-        var token = getUrlVariable("token") || getTokenFromCookie();
-        var reports = JSON.parse(decodeURIComponent(getUrlVariable("reports")));
-        reports.forEach(function (report) {
-            var root = document.createElement("div");
-            root.style.fontSize = "13px";
-            root.style.padding = "5px";
-            var url = report.url.split("?")[0].split("#")[0];
-            if (token)
-                url += "?token=" + token;
-            root.innerHTML = `<a target="_blank" href="${url}">${report.name}</a>`;
-            document.getElementById("layoutNode").appendChild(root);
-        });
+        window.onload = function () {
+            var token = getUrlVariable("token") || getTokenFromCookie();
+            var reports = JSON.parse(decodeURIComponent(getUrlVariable("reports")));
+            reports.forEach(function (report) {
+                var root = document.createElement("div");
+                root.style.fontSize = "13px";
+                root.style.padding = "5px";
+                var url = report.url.split("?")[0].split("#")[0];
+                if (token)
+                    url += "?token=" + token;
+                root.innerHTML = `<a target="_blank" href="${url}">${report.name}</a>`;
+                document.getElementById("layoutNode").appendChild(root);
+            });
+        };
 
     </script>
 </head>
