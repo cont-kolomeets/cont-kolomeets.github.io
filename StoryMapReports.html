@@ -63,7 +63,7 @@
             if (token)
                 url += "?token=" + token;
             root.innerHTML = `<a target="_blank" href="${url}">${report.name}</a>`;
-            layoutNode.appendChild(root);
+            document.getElementById("layoutNode").appendChild(root);
         });
 
     </script>
